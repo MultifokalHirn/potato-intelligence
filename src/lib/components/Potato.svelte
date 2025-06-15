@@ -1,4 +1,11 @@
-<div class="potato"><h1>🥔</h1></div>
+<script lang="ts">
+  import ChatWindow from './ChatWindow.svelte';
+</script>
+
+<div class="potato">
+  <h1>🥔</h1>
+  <ChatWindow />
+</div>
 
 <style>
 	div {
