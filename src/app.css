@@ -1,3 +1,12 @@
 @import 'tailwindcss';
 @plugin '@tailwindcss/forms';
 @plugin '@tailwindcss/typography';
+
+@layer base {
+	html {
+		font-family: 'Comic Sans MS', 'Comic Sans', cursive, system-ui, sans-serif;
+	}
+	h1 {
+		font-size: 20px;
+	}
+}
