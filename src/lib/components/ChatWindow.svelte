@@ -4,6 +4,7 @@
 	interface Message {
 		role: 'user' | 'assistant';
 		text: string;
+		thinking?: boolean;
 	}
 
 	let messages: Message[] = [];
@@ -14,8 +15,15 @@
 		if (!text) return;
 		messages = [...messages, { role: 'user', text }];
 		input = '';
-		// respond with potato emoji
-		messages = [...messages, { role: 'assistant', text: '🥔' }];
+
+		const thinkingMessage: Message = { role: 'assistant', text: '', thinking: true };
+		messages = [...messages, thinkingMessage];
+
+		setTimeout(() => {
+			thinkingMessage.thinking = false;
+			thinkingMessage.text = '🥔';
+			messages = [...messages];
+		}, 2000);
 	}
 
 	function handleKey(event: KeyboardEvent) {
@@ -27,11 +35,13 @@
 </script>
 
 <div class="chat-window">
-	<div class="messages">
-		{#each messages as m (m)}
-			<ChatMessage role={m.role} text={m.text} />
-		{/each}
-	</div>
+	{#if messages.length > 0}
+		<div class="messages">
+			{#each messages as m (m)}
+				<ChatMessage role={m.role} text={m.text} thinking={m.thinking} />
+			{/each}
+		</div>
+	{/if}
 	<div class="input-row">
 		<textarea bind:value={input} on:keydown={handleKey} rows="2" placeholder="Ask me anything..."
 		></textarea>
@@ -45,17 +55,18 @@
 		flex-direction: column;
 		gap: 0.5rem;
 		width: 100%;
-		max-width: 30rem;
+		max-width: 60rem;
+		/* height: 100%; */
 	}
 	.messages {
 		display: flex;
 		flex-direction: column;
 		gap: 0.25rem;
-		border: 1px solid #ddd;
-		padding: 0.5rem;
-		min-height: 10rem;
-		max-height: 20rem;
+		border: 2px dashed #ddd;
+		padding: 1rem;
+		flex: 1;
 		overflow-y: auto;
+		/* background-color: #faf9f6; */
 	}
 	.input-row {
 		display: flex;
@@ -63,9 +74,14 @@
 	}
 	textarea {
 		flex: 1;
-		padding: 0.25rem;
+		padding: 0.5rem;
+		border-radius: 0.5rem;
 	}
 	button {
-		padding: 0.25rem 0.75rem;
+		padding: 0.5rem 1rem;
+		border-radius: 0.5rem;
+		background-color: #ffd1dc;
+		border: none;
+		cursor: pointer;
 	}
 </style>
