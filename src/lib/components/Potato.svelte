@@ -16,14 +16,4 @@
 		min-width: 80vh;
 		padding: 1rem;
 	}
-
-	.potato h1 {
-		font-size: 2rem;
-		margin-bottom: 1rem;
-	}
-
-	.potato p {
-		font-size: 1.25rem;
-		margin-bottom: 2rem;
-	}
 </style>
